@@ -9,12 +9,13 @@ import (
 	"github.com/gorilla/mux"
 )
 
+
 func authMiddleware(h http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 		bearerAndToken :=  strings.Split(r.Header.Get("Authorization")," ")
 
-		if len(bearerAndToken) != 2 || bearerAndToken[0] != "Bearer" || bearerAndToken[1] != "valid-key" {
+		if len(bearerAndToken) != 2 || bearerAndToken[0] != "Bearer" || bearerAndToken[1] != C.AuthToken {
             w.Header().Set("Content-Type","application/json")
 			w.WriteHeader(http.StatusForbidden)
 			json.NewEncoder(w).Encode(map[string]interface{}{"message":"Missing auth token"})
@@ -39,7 +40,7 @@ func initializeRouter() *mux.Router{
 }
 
 func main(){
-
+	loadConfigurations()
 	r := initializeRouter()
 	log.Println("Starting Server at port 5000")
 	log.Fatal(http.ListenAndServe(":5000",r))
