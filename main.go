@@ -29,13 +29,12 @@ func initializeRouter() *mux.Router{
 	
 	r := mux.NewRouter()
     r.Use(authMiddleware)
-	r.HandleFunc("/todo",func(rw http.ResponseWriter, r *http.Request) {
-		rw.Header().Set("Content-Type","application/json")
-		rw.WriteHeader(http.StatusOK)
-		json.NewEncoder(rw).Encode(map[string]interface{}{"message":"Hi"})
-	}).Methods("GET")
-
-
+	r.HandleFunc("/todo", getAllTodoItems).Methods("GET")
+	r.HandleFunc("/todo/{id}", getTodoItem).Methods("GET")
+	r.HandleFunc("/todo", createTodoItem).Methods("POST")
+	r.HandleFunc("/todo/{id}", updateTodoItem).Methods("PUT")
+	r.HandleFunc("/todo/{id}", deleteTodoItem).Methods("DELETE")
+	
 	return r
 }
 
