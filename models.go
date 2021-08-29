@@ -35,7 +35,8 @@ func (date *Date) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type TodoItemCreateRequest struct{
+type TodoItem struct{
+	ID              uint        `json:"id"`
 	Name 			string 		`json:"name"`
 	Description		string 		`json:"description"`
 	Priority		string      `json:"priority"`
