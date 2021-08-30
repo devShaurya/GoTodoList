@@ -8,6 +8,18 @@ import (
 
 type Configurations struct{
 	AuthToken string
+	Server    ServerConfigurations
+	Database  DatabaseConfigurations
+}
+
+type ServerConfigurations struct {
+	Port    int
+	BaseUrl string
+}
+type DatabaseConfigurations struct {
+	DbName     string
+	DbUser     string
+	DbPassword string
 }
 
 var C Configurations

@@ -1,1 +1,9 @@
 AuthToken: "valid-key"
+server:
+    port: 3306
+    baseUrl: "127.0.0.1"
+
+database:
+    dbName: "tcdb"
+    dbUser: "tcgouser"
+    dbPassword: "Password@123"
