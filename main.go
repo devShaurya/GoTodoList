@@ -2,13 +2,31 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"strings"
 
 	"github.com/gorilla/mux"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
+var db *gorm.DB
+var dbErr error
+
+
+func databaseMigrations(){
+	DSN := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=UTC",C.Database.DbUser,C.Database.DbPassword,C.Server.BaseUrl,C.Database.DbName)
+	db, dbErr = gorm.Open(mysql.Open(DSN), &gorm.Config{})
+	if dbErr!= nil{
+		log.Fatalf("Connection to database failed because %s",dbErr.Error())
+	}
+	if err:= db.AutoMigrate(&TodoItem{}); err != nil{
+		log.Fatalf("AutoMigration failed because %s",err.Error())
+	}
+	log.Println("Database Connected...")
+}
 
 func authMiddleware(h http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -41,6 +59,7 @@ func initializeRouter() *mux.Router{
 
 func main(){
 	loadConfigurations()
+	databaseMigrations()
 	r := initializeRouter()
 	log.Println("Starting Server at port 5000")
 	log.Fatal(http.ListenAndServe(":5000",r))
