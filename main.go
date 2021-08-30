@@ -39,7 +39,7 @@ func authMiddleware(h http.Handler) http.Handler {
 			json.NewEncoder(w).Encode(map[string]interface{}{"message":"Missing auth token"})
             return
         }
-		log.Println("User logged successfully")
+		log.Println("user verified successfully")
 		h.ServeHTTP(w,r)	
     })
 }
