@@ -5,33 +5,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 
 	"github.com/gorilla/mux"
 )
-
-// func validateRequest(todoItem TodoItem) []string {
-// 	errs := []string{}
-
-// 	if todoItem.Name == "" || todoItem.Priority == "" || !todoItem.DueDate.Valid {
-// 		errs = append(errs, fmt.Errorf("name, priority and dueDate are required").Error())
-// 	}
-
-// 	if len(todoItem.Name) > 256{
-// 		errs = append(errs, fmt.Errorf("name can only be of 256").Error() )
-// 	}
-
-// 	if todoItem.Completed && !todoItem.CompletionDate.Valid {
-// 		errs = append(errs, fmt.Errorf("give completionDate if todo item is completed").Error())
-// 	}
-
-// 	if todoItem.Priority != "HIGH" && todoItem.Priority != "MED" && todoItem.Priority != "LOW" {
-// 		errs = append(errs, fmt.Errorf("priority can be only LOW, MED or HIGH").Error())
-// 	}
-
-// 	return errs
-// }
 
 func handleDatabaseErrors(err string) string{
 	err = strings.Trim(err," ")
@@ -54,6 +33,9 @@ func handleDatabaseErrors(err string) string{
 		}
 	}else if err == "record not found" { // mysql message for no record
  		return "Todo Item with that id is not present"
+	
+	} else if strings.Contains(err, "1054"){  // mysql error #1054 - Unknown column in 'Field List'
+		return "name, description, priority, dueDate, completed and completionDate are the only fields that todo item contains"
 	}
 	return err
 } 
@@ -62,16 +44,10 @@ func createTodoItem (rw http.ResponseWriter, r *http.Request) {
 	log.Println("Post request")
 	var todoItem TodoItem
 	json.NewDecoder(r.Body).Decode(&todoItem)
-	// errs := validateRequest(todoItem)
-
+	
 	todoItem.Name = strings.Trim(todoItem.Name," ")
 	rw.Header().Set("Content-Type","application/json")
-	// if len(errs) != 0 {
-	// 	rw.WriteHeader(http.StatusBadRequest)
-	// 	json.NewEncoder(rw).Encode(map[string]interface{}{"messge":errs})
-	// 	return
-	// }
-
+	
 	if result := db.Create(&todoItem); result.Error != nil {
 		rw.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(rw).Encode(map[string]interface{}{"messge": handleDatabaseErrors(result.Error.Error())})
@@ -86,8 +62,18 @@ func createTodoItem (rw http.ResponseWriter, r *http.Request) {
 
 func getAllTodoItems (rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type","application/json")
+	var todoItems []TodoItem
+	
+	query, namedArgument := getQueryString(r.URL.Query())
+	
+	if result := db.Raw(query,namedArgument).Scan(&todoItems); result.Error != nil{
+		rw.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(rw).Encode(map[string]interface{}{"messge":fmt.Sprintf("Error %s",result.Error.Error())})
+		return
+	}
+
 	rw.WriteHeader(http.StatusOK)
-	json.NewEncoder(rw).Encode(map[string]interface{}{"message":"In get all"})
+	json.NewEncoder(rw).Encode(map[string]interface{}{"message":"Success","todoItems":todoItems})
 }
 
 func getTodoItem (rw http.ResponseWriter, r *http.Request) {
@@ -166,4 +152,39 @@ func deleteTodoItem (rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusOK)
 	json.NewEncoder(rw).Encode(map[string]interface{}{"message":fmt.Sprintf("Todo Item with id=%s deleted",params["id"])})
 	log.Println("Delete request successfully executed")
+}
+
+type NamedArgument struct{
+	Priority string
+	Completed bool
+	Name string
+	Description string
+}
+
+func getQueryString(q url.Values) (string, NamedArgument) {
+	var namedArgument = NamedArgument{}
+	query := "SELECT * FROM todo_items WHERE deleted_at IS NULL"
+
+	if q.Has("priority"){
+		query += " AND priority = @Priority"
+		namedArgument.Priority = q.Get("priority")
+	}
+	if q.Has("completed"){
+		query += " AND completed = @Completed"
+		if q.Get("completed")=="true" {
+			namedArgument.Completed = true
+		} else{
+			namedArgument.Completed = false
+		}
+	}
+	if q.Has("name"){
+		query += " AND name LIKE @Name"
+		namedArgument.Name = "%"+q.Get("name")+"%"
+	}
+	if q.Has("description"){
+		query += " AND description LIKE @description"
+		namedArgument.Description = "%"+q.Get("description")+"%"
+	}
+
+	return query, namedArgument
 }
