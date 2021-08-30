@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type Date struct{
@@ -36,11 +38,11 @@ func (date *Date) UnmarshalJSON(data []byte) error {
 }
 
 type TodoItem struct{
-	ID              uint        `json:"id"`
-	Name 			string 		`json:"name"`
+	gorm.Model
+	Name 			string 		`json:"name" gorm:"not null;size:256"`
 	Description		string 		`json:"description"`
-	Priority		string      `json:"priority"`
-	DueDate			Date        `json:"dueDate"`
-	Completed		bool   		`json:"completed"`
-	CompletionDate 	Date 	    `json:"completionDate"`
+	Priority		string      `json:"priority" gorm:"not null;check:priority in ('HIGH', 'LOW', 'MED')"`
+	DueDate			Date        `json:"dueDate"  gorm:"not null"`
+	Completed		bool   		`json:"completed" gorm:"default:false;"`
+	CompletionDate 	Date 	    `json:"completionDate" gorm:"check:completed = false AND completion_date IS NULL"`
 }
