@@ -41,7 +41,7 @@ type TodoItem struct{
 	gorm.Model
 	Name 			string 		`json:"name" gorm:"not null;size:256;check:name_length_check,length(name)>3"`
 	Description		string 		`json:"description"`
-	Priority		string      `json:"priority" gorm:"default:'LOW';check:priority_check,priority in ('HIGH', 'LOW', 'MED')"`
+	Priority		string      `json:"priority" gorm:"not null;default:'LOW';check:priority_check,priority in ('HIGH', 'LOW', 'MED')"`
 	DueDate			Date        `json:"dueDate"  gorm:"not null"`
 	Completed		bool   		`json:"completed" gorm:"default:false"`
 	CompletionDate 	Date 	    `json:"completionDate" gorm:"check:completion_date_check,(completed = false AND completion_date IS NULL) OR (completed = true AND completion_date IS NOT NULL) "`
