@@ -135,6 +135,7 @@ func updateTodoItem (rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// check if item with requested ID is present
 	var todoItem TodoItem
 	if result := db.First(&todoItem,params["id"]); result.Error != nil{
 		rw.WriteHeader(http.StatusInternalServerError)
@@ -166,7 +167,13 @@ func deleteTodoItem (rw http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(rw).Encode(map[string]interface{}{"messge":"Give integer ID"})
 		return
 	}
-
+	// check if item with requested ID has already been deleted
+	var todoItem TodoItem
+	if result := db.First(&todoItem,params["id"]); result.Error != nil{
+		rw.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(rw).Encode(map[string]interface{}{"messge": handleDatabaseErrors(result.Error.Error())})
+		return
+	}
 	result := db.Delete(&TodoItem{},params["id"])
 
 	if result.Error != nil{
