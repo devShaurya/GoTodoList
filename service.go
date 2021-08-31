@@ -32,7 +32,7 @@ func handleDatabaseErrors(err string) string{
 			return "if todo item has been completed then completionDate is necessary"
 		}
 	}else if err == "record not found" { // mysql message for no record
- 		return "Todo Item with that id is not present"
+ 		return "Todo Item with that ID is not present"
 	
 	} else if strings.Contains(err, "1054"){  // mysql error #1054 - Unknown column in 'Field List'
 		return "name, description, priority, dueDate, completed and completionDate are the only fields that todo item contains"
@@ -40,6 +40,13 @@ func handleDatabaseErrors(err string) string{
 	return err
 } 
 
+// Create new todo item
+// name, priority and dueDate should be present in request. 
+// dueDate and completionDate must follow dd-mm-yyyy format.
+// name should be atleast 4 chars and atmost 256 chars.
+// priority should be one of LOW, MED or HIGH.
+// Default value of completed is false and priority is LOW.
+// if completed is true, then completionDate should also be provided.
 func createTodoItem (rw http.ResponseWriter, r *http.Request) {
 	log.Println("Post request")
 	var todoItem TodoItem
@@ -60,6 +67,13 @@ func createTodoItem (rw http.ResponseWriter, r *http.Request) {
 	log.Println("Post request successfully executed")
 }
 
+// Get All Todo List items
+// Filtering can be done using parameters: priority, name, description and completed.
+// Multiple parameters are allowed.
+// strictly follow names of parameters for filtering.
+// if string mentioned in name or description is contained in respective fields then they are returned.
+// string mentioned in priority is searched for exact match.
+// completed can be true or false. If anything other than true is mentioned, its considered as false.
 func getAllTodoItems (rw http.ResponseWriter, r *http.Request) {
 	log.Println("get all request")
 	rw.Header().Set("Content-Type","application/json")
@@ -79,6 +93,7 @@ func getAllTodoItems (rw http.ResponseWriter, r *http.Request) {
 	log.Println("get all request successfully executed")
 }
 
+// get todo item according to ID present in request path
 func getTodoItem (rw http.ResponseWriter, r *http.Request) {
 	log.Println("Get request")
 	rw.Header().Set("Content-Type","application/json")
@@ -86,7 +101,7 @@ func getTodoItem (rw http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	if _, err := strconv.Atoi(params["id"]); err != nil {
 		rw.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(rw).Encode(map[string]interface{}{"messge":"Give integer id"})
+		json.NewEncoder(rw).Encode(map[string]interface{}{"messge":"Give integer ID"})
 		return
 	}
 
@@ -102,6 +117,10 @@ func getTodoItem (rw http.ResponseWriter, r *http.Request) {
 	log.Println("Get request successfully executed")
 }
 
+// Updates todo item according to ID present in request path
+// first checks if an item with requested ID is present or not. 
+// single or multiple fields can be updated.
+// but they must follow constraints present in database.
 func updateTodoItem (rw http.ResponseWriter, r *http.Request) {
 	log.Println("Put request")
 	var putRequest TodoItem
@@ -112,7 +131,7 @@ func updateTodoItem (rw http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	if _, err := strconv.Atoi(params["id"]); err != nil {
 		rw.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(rw).Encode(map[string]interface{}{"messge":"Give integer id"})
+		json.NewEncoder(rw).Encode(map[string]interface{}{"messge":"Give integer ID"})
 		return
 	}
 
@@ -130,9 +149,13 @@ func updateTodoItem (rw http.ResponseWriter, r *http.Request) {
 	}
 
 	rw.WriteHeader(http.StatusOK)
-	json.NewEncoder(rw).Encode(map[string]interface{}{"message":fmt.Sprintf("Todo item with id = %s update successfully",params["id"])})
+	json.NewEncoder(rw).Encode(map[string]interface{}{"message":fmt.Sprintf("Todo item with ID = %s update successfully",params["id"])})
 	log.Println("Put request successfully executed")
 }
+
+// deletes a todo item according to ID present in request path
+// actually it soft deletes it. Meaning it does not remove row from table but updates deleted_at column
+// with the time when request was made.
 func deleteTodoItem (rw http.ResponseWriter, r *http.Request) {
 	log.Println("Delete request")
 	rw.Header().Set("Content-Type","application/json")
@@ -140,7 +163,7 @@ func deleteTodoItem (rw http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	if _, err := strconv.Atoi(params["id"]); err != nil {
 		rw.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(rw).Encode(map[string]interface{}{"messge":"Give integer id"})
+		json.NewEncoder(rw).Encode(map[string]interface{}{"messge":"Give integer ID"})
 		return
 	}
 
@@ -153,10 +176,11 @@ func deleteTodoItem (rw http.ResponseWriter, r *http.Request) {
 	}
 
 	rw.WriteHeader(http.StatusOK)
-	json.NewEncoder(rw).Encode(map[string]interface{}{"message":fmt.Sprintf("Todo Item with id=%s deleted",params["id"])})
+	json.NewEncoder(rw).Encode(map[string]interface{}{"message":fmt.Sprintf("Todo Item with ID=%s deleted",params["id"])})
 	log.Println("Delete request successfully executed")
 }
 
+// used in sql query, for replacing named arguments in the query
 type NamedArgument struct{
 	Priority string
 	Completed bool
@@ -164,6 +188,7 @@ type NamedArgument struct{
 	Description string
 }
 
+// To make sql query to be used for filtering the todo items
 func getQueryString(q url.Values) (string, NamedArgument) {
 	var namedArgument = NamedArgument{}
 	query := "SELECT * FROM todo_items WHERE deleted_at IS NULL"

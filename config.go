@@ -24,7 +24,7 @@ type DatabaseConfigurations struct {
 }
 
 var C Configurations
-
+// loading configurations from conf.yaml file using viper
 func loadConfigurations(){
 	viper.AddConfigPath(".")
 	viper.SetConfigName("conf")

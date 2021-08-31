@@ -15,7 +15,7 @@ import (
 var db *gorm.DB
 var dbErr error
 
-
+// initialize and automigrate todoItems table
 func databaseMigrations(){
 	DSN := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=UTC",C.Database.DbUser,C.Database.DbPassword,C.Database.DbBaseUrl,C.Database.DbPort,C.Database.DbName)
 	db, dbErr = gorm.Open(mysql.Open(DSN), &gorm.Config{})
@@ -27,7 +27,7 @@ func databaseMigrations(){
 	}
 	log.Println("Database Connected...")
 }
-
+// middleware for verifying api requests
 func authMiddleware(h http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
@@ -43,7 +43,7 @@ func authMiddleware(h http.Handler) http.Handler {
 		h.ServeHTTP(w,r)	
     })
 }
-
+// initialize router
 func initializeRouter() *mux.Router{
 	
 	r := mux.NewRouter()
