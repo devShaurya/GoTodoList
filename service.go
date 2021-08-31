@@ -120,7 +120,8 @@ func getTodoItem (rw http.ResponseWriter, r *http.Request) {
 // Updates todo item according to ID present in request path
 // first checks if an item with requested ID is present or not. 
 // single or multiple fields can be updated.
-// but they must follow constraints present in database.
+// but they must follow constraints present in database. They are the same as
+// the ones to be followed by post request in createTodoItem  
 func updateTodoItem (rw http.ResponseWriter, r *http.Request) {
 	log.Println("Put request")
 	var putRequest TodoItem
