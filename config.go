@@ -13,13 +13,14 @@ type Configurations struct{
 }
 
 type ServerConfigurations struct {
-	Port    int
-	BaseUrl string
+	Port int
 }
 type DatabaseConfigurations struct {
 	DbName     string
 	DbUser     string
 	DbPassword string
+	DbPort     int
+	DbBaseUrl  string
 }
 
 var C Configurations

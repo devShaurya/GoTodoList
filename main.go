@@ -17,7 +17,7 @@ var dbErr error
 
 
 func databaseMigrations(){
-	DSN := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=UTC",C.Database.DbUser,C.Database.DbPassword,C.Server.BaseUrl,C.Database.DbName)
+	DSN := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=UTC",C.Database.DbUser,C.Database.DbPassword,C.Database.DbBaseUrl,C.Database.DbPort,C.Database.DbName)
 	db, dbErr = gorm.Open(mysql.Open(DSN), &gorm.Config{})
 	if dbErr!= nil{
 		log.Fatalf("Connection to database failed because %s",dbErr.Error())
@@ -61,6 +61,6 @@ func main(){
 	loadConfigurations()
 	databaseMigrations()
 	r := initializeRouter()
-	log.Println("Starting Server at port 5000")
-	log.Fatal(http.ListenAndServe(":5000",r))
+	log.Printf("Starting Server at port %d\n",C.Server.Port)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d",C.Server.Port),r))
 }
