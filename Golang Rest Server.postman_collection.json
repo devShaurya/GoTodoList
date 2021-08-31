@@ -1,0 +1,979 @@
+{
+	"info": {
+		"_postman_id": "89857694-7d40-4523-a4e4-4d205166bc6e",
+		"name": "Golang Rest Server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Todo Item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"asdjnsf\",\n    \"priority\": \"MED\",\n    \"dueDate\": \"11-12-2021\",\n    \"completed\": true,\n    \"description\": \"Nedasdnwefnwfied\",\n    \"completionDate\": \"12-12-2022\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/todo",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todo"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create Todo Item  --- SUCCESS with necessary feilds",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Lets see\",\n    \"priority\":\"MED\",\n    \"dueDate\": \"23-12-2020\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/todo",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 14:18:52 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "47"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Successfully Created with ID = 6\"\n}"
+				},
+				{
+					"name": "Create Todo Item -- SUCCESS with all fields",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Complete this project\",\n    \"priority\":\"LOW\",\n    \"dueDate\": \"23-12-2020\",\n    \"completed\":false,\n    \"description\":\"Just do it with a big a smile.\",\n    \"completionDate\":null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/todo",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 16:23:46 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "47"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Successfully Created with ID = 7\"\n}"
+				},
+				{
+					"name": "Create Todo Item -- FAILED Name length constraint not met",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Com\",\n    \"priority\":\"HIGH\",\n    \"dueDate\": \"23-12-2020\",\n    \"completed\":false,\n    \"description\":\"Not needed\",\n    \"completionDate\":null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/todo",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 16:24:39 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "85"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"messge\": \"name should be given and should be atleast 4 chars and at max 256 chars\"\n}"
+				},
+				{
+					"name": "Create Todo Item -- FAILED Priority constraint not met",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Comp\",\n    \"priority\":\"HIG\",\n    \"dueDate\": \"01-01-2021\",\n    \"completed\":false,\n    \"description\":\"Not needed\",\n    \"completionDate\":null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/todo",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 16:26:23 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "56"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"messge\": \"priority can only be 'LOW', 'MED', 'HIGH'.\"\n}"
+				},
+				{
+					"name": "Create Todo Item -- FAILED Date format constraint not met",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Comp\",\n    \"priority\":\"HIG\",\n    \"dueDate\": \"01-1-2021\",\n    \"completed\":false,\n    \"description\":\"Not needed\",\n    \"completionDate\":null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/todo",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 16:28:42 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "57"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"messge\": \"name, priority and dueDate should be given.\"\n}"
+				},
+				{
+					"name": "Create Todo Item -- FAILED completed and completionDate constraint not met",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"No nO NO\",\n    \"priority\":\"MED\",\n    \"dueDate\": \"11-12-2021\",\n    \"completed\":true,\n    \"description\":\"Neded\",\n    \"completionDate\":null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/todo",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 16:29:40 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "78"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"messge\": \"if todo item has been completed then completionDate is necessary\"\n}"
+				},
+				{
+					"name": "Create Todo Item -- FAILED not null constraint",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"No nO NO\",\n    \"priority\":\"MED\",\n    \"completed\":true,\n    \"description\":\"Neded\",\n    \"completionDate\":\"12-12-2022\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/todo",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 16:36:39 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "57"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"messge\": \"name, priority and dueDate should be given.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Todo Item",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\":\"SHUT UP\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/todo/10",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todo",
+						"10"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update Todo Item -- SUCCESS",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"jhbfbhdc akbc\",\n    \"description\":\"sjhvshdkawkuegfbbcnaerjhvasvhjdvhwehjh,cbvhewvhjfchjwcbhvwevcerj,vjbchsv\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/todo/5",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo",
+								"5"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 16:25:26 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "56"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Todo item with ID = 5 update successfully\"\n}"
+				},
+				{
+					"name": "Update Todo Item -- Failed completed and completion date constraint not met",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"completed\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/todo/8",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo",
+								"8"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 16:33:25 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "78"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"messge\": \"if todo item has been completed then completionDate is necessary\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get all Todo items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/todo",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todo"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get all Todo items",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todo",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 04:26:16 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "786"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Success\",\n    \"todoItems\": [\n        {\n            \"ID\": 2,\n            \"CreatedAt\": \"2021-08-30T12:07:35.752Z\",\n            \"UpdatedAt\": \"2021-08-30T18:41:03.423Z\",\n            \"DeletedAt\": null,\n            \"name\": \"Jai Hanumanji\",\n            \"description\": \"\",\n            \"priority\": \"HIGH\",\n            \"dueDate\": \"29-02-2020\",\n            \"completed\": true,\n            \"completionDate\": \"29-02-2020\"\n        },\n        {\n            \"ID\": 3,\n            \"CreatedAt\": \"2021-08-30T12:21:40.058Z\",\n            \"UpdatedAt\": \"2021-08-30T12:21:40.058Z\",\n            \"DeletedAt\": null,\n            \"name\": \"Shaurya TV\",\n            \"description\": \"\",\n            \"priority\": \"HIGH\",\n            \"dueDate\": \"01-02-2012\",\n            \"completed\": false,\n            \"completionDate\": null\n        },\n        {\n            \"ID\": 5,\n            \"CreatedAt\": \"2021-08-31T03:52:16.257Z\",\n            \"UpdatedAt\": \"2021-08-31T03:53:01.174Z\",\n            \"DeletedAt\": null,\n            \"name\": \"jhbfbhdc akbc\",\n            \"description\": \"sjhvshdkawkuegfbbcnaerjhvasvhjdvhwehjh,cbvhewvhjfchjwcbhvwevcerj,vjbchsv\",\n            \"priority\": \"MED\",\n            \"dueDate\": \"23-12-2021\",\n            \"completed\": false,\n            \"completionDate\": null\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Items - Filter by",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/todo?completed=false",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todo"
+					],
+					"query": [
+						{
+							"key": "completed",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Items - Filter by -- SUCCESS single param filter",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todo?completed=false",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo"
+							],
+							"query": [
+								{
+									"key": "completed",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 16:46:48 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1037"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Success\",\n    \"todoItems\": [\n        {\n            \"ID\": 5,\n            \"CreatedAt\": \"2021-08-31T03:52:16.257Z\",\n            \"UpdatedAt\": \"2021-08-31T16:25:26.735Z\",\n            \"DeletedAt\": null,\n            \"name\": \"jhbfbhdc akbc\",\n            \"description\": \"sjhvshdkawkuegfbbcnaerjhvasvhjdvhwehjh,cbvhewvhjfchjwcbhvwevcerj,vjbchsv\",\n            \"priority\": \"MED\",\n            \"dueDate\": \"23-12-2021\",\n            \"completed\": false,\n            \"completionDate\": null\n        },\n        {\n            \"ID\": 6,\n            \"CreatedAt\": \"2021-08-31T14:18:52.95Z\",\n            \"UpdatedAt\": \"2021-08-31T14:18:52.95Z\",\n            \"DeletedAt\": null,\n            \"name\": \"Lets see\",\n            \"description\": \"\",\n            \"priority\": \"MED\",\n            \"dueDate\": \"23-12-2020\",\n            \"completed\": false,\n            \"completionDate\": null\n        },\n        {\n            \"ID\": 7,\n            \"CreatedAt\": \"2021-08-31T16:23:46.703Z\",\n            \"UpdatedAt\": \"2021-08-31T16:23:46.703Z\",\n            \"DeletedAt\": null,\n            \"name\": \"Complete this project\",\n            \"description\": \"Just do it with a big a smile.\",\n            \"priority\": \"LOW\",\n            \"dueDate\": \"23-12-2020\",\n            \"completed\": false,\n            \"completionDate\": null\n        },\n        {\n            \"ID\": 8,\n            \"CreatedAt\": \"2021-08-31T16:26:12.992Z\",\n            \"UpdatedAt\": \"2021-08-31T16:32:59.054Z\",\n            \"DeletedAt\": null,\n            \"name\": \"Comp\",\n            \"description\": \"Not needed\",\n            \"priority\": \"HIGH\",\n            \"dueDate\": \"01-01-2021\",\n            \"completed\": false,\n            \"completionDate\": null\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get Items - SUCCES Filter by Multiple Params filter",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todo?name=s&priority=MED",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "s"
+								},
+								{
+									"key": "priority",
+									"value": "MED"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 16:38:53 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "493"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Success\",\n    \"todoItems\": [\n        {\n            \"ID\": 6,\n            \"CreatedAt\": \"2021-08-31T14:18:52.95Z\",\n            \"UpdatedAt\": \"2021-08-31T14:18:52.95Z\",\n            \"DeletedAt\": null,\n            \"name\": \"Lets see\",\n            \"description\": \"\",\n            \"priority\": \"MED\",\n            \"dueDate\": \"23-12-2020\",\n            \"completed\": false,\n            \"completionDate\": null\n        },\n        {\n            \"ID\": 11,\n            \"CreatedAt\": \"2021-08-31T16:38:49.01Z\",\n            \"UpdatedAt\": \"2021-08-31T16:38:49.01Z\",\n            \"DeletedAt\": null,\n            \"name\": \"asdjnsf\",\n            \"description\": \"Nedasdnwefnwfied\",\n            \"priority\": \"MED\",\n            \"dueDate\": \"11-12-2021\",\n            \"completed\": true,\n            \"completionDate\": \"12-12-2022\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get Items - Filter by -- FAILED wrong parameter name",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todo?namasde=ak",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo"
+							],
+							"query": [
+								{
+									"key": "namasde",
+									"value": "ak"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 16:45:13 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1509"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Success\",\n    \"todoItems\": [\n        {\n            \"ID\": 5,\n            \"CreatedAt\": \"2021-08-31T03:52:16.257Z\",\n            \"UpdatedAt\": \"2021-08-31T16:25:26.735Z\",\n            \"DeletedAt\": null,\n            \"name\": \"jhbfbhdc akbc\",\n            \"description\": \"sjhvshdkawkuegfbbcnaerjhvasvhjdvhwehjh,cbvhewvhjfchjwcbhvwevcerj,vjbchsv\",\n            \"priority\": \"MED\",\n            \"dueDate\": \"23-12-2021\",\n            \"completed\": false,\n            \"completionDate\": null\n        },\n        {\n            \"ID\": 6,\n            \"CreatedAt\": \"2021-08-31T14:18:52.95Z\",\n            \"UpdatedAt\": \"2021-08-31T14:18:52.95Z\",\n            \"DeletedAt\": null,\n            \"name\": \"Lets see\",\n            \"description\": \"\",\n            \"priority\": \"MED\",\n            \"dueDate\": \"23-12-2020\",\n            \"completed\": false,\n            \"completionDate\": null\n        },\n        {\n            \"ID\": 7,\n            \"CreatedAt\": \"2021-08-31T16:23:46.703Z\",\n            \"UpdatedAt\": \"2021-08-31T16:23:46.703Z\",\n            \"DeletedAt\": null,\n            \"name\": \"Complete this project\",\n            \"description\": \"Just do it with a big a smile.\",\n            \"priority\": \"LOW\",\n            \"dueDate\": \"23-12-2020\",\n            \"completed\": false,\n            \"completionDate\": null\n        },\n        {\n            \"ID\": 8,\n            \"CreatedAt\": \"2021-08-31T16:26:12.992Z\",\n            \"UpdatedAt\": \"2021-08-31T16:32:59.054Z\",\n            \"DeletedAt\": null,\n            \"name\": \"Comp\",\n            \"description\": \"Not needed\",\n            \"priority\": \"HIGH\",\n            \"dueDate\": \"01-01-2021\",\n            \"completed\": false,\n            \"completionDate\": null\n        },\n        {\n            \"ID\": 10,\n            \"CreatedAt\": \"2021-08-31T16:35:20.674Z\",\n            \"UpdatedAt\": \"2021-08-31T16:42:13.471Z\",\n            \"DeletedAt\": null,\n            \"name\": \"No nO NO\",\n            \"description\": \"Neded\",\n            \"priority\": \"MED\",\n            \"dueDate\": \"11-12-2021\",\n            \"completed\": true,\n            \"completionDate\": \"12-12-2022\"\n        },\n        {\n            \"ID\": 11,\n            \"CreatedAt\": \"2021-08-31T16:38:49.01Z\",\n            \"UpdatedAt\": \"2021-08-31T16:38:49.01Z\",\n            \"DeletedAt\": null,\n            \"name\": \"asdjnsf\",\n            \"description\": \"Nedasdnwefnwfied\",\n            \"priority\": \"MED\",\n            \"dueDate\": \"11-12-2021\",\n            \"completed\": true,\n            \"completionDate\": \"12-12-2022\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Todo Item",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/todo/6",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todo",
+						"6"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Todo Item -- Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todo/5",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo",
+								"5"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 03:53:09 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "329"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Success\",\n    \"todoItem\": {\n        \"ID\": 5,\n        \"CreatedAt\": \"2021-08-31T03:52:16.257Z\",\n        \"UpdatedAt\": \"2021-08-31T03:53:01.174Z\",\n        \"DeletedAt\": null,\n        \"name\": \"jhbfbhdc akbc\",\n        \"description\": \"sjhvshdkawkuegfbbcnaerjhvasvhjdvhwehjh,cbvhewvhjfchjwcbhvwevcerj,vjbchsv\",\n        \"priority\": \"MED\",\n        \"dueDate\": \"23-12-2021\",\n        \"completed\": false,\n        \"completionDate\": null\n    }\n}"
+				},
+				{
+					"name": "Get Todo Item -- ID is not present",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todo/10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo",
+								"10"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 14:21:46 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "51"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"messge\": \"Todo Item with that ID is not present\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete Todo Item",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/todo/9",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todo",
+						"9"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete Todo Item -- Which is already deleted",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todo/4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo",
+								"4"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 14:18:24 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "51"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"messge\": \"Todo Item with that ID is not present\"\n}"
+				},
+				{
+					"name": "Delete Todo Item -- Success",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todo/3",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo",
+								"3"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 14:19:37 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "42"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Todo Item with ID=3 deleted\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Missing Authorzation",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/todo",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todo"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Request Without Auth token",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todo",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 11:06:18 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "33"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Missing auth token\"\n}"
+				},
+				{
+					"name": "Request with incorrect auth token",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todo",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Aug 2021 11:16:38 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "33"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Missing auth token\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{bearerToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000"
+		},
+		{
+			"key": "bearerToken",
+			"value": "valid-key"
+		}
+	]
+}
