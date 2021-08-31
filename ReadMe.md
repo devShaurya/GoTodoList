@@ -18,4 +18,7 @@ Made using go, gorm and gorilla-mux. Uses mysql as the database. Mysql version i
 
 ## Steps to verify
 
-1. After successfully configuration, verfication can be done using postman. Various request and response examples will help you to verify.
+1. After successfully configuration, verfication can be done using postman.
+2. Import the collection in postman.
+3. If changes were made in **conf.yaml**, please make sure to take care of steps **5** and **6** in **Steps to Configure**.
+4. Various request and response examples will help you to verify the submission.
