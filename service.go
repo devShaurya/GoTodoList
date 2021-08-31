@@ -61,10 +61,12 @@ func createTodoItem (rw http.ResponseWriter, r *http.Request) {
 }
 
 func getAllTodoItems (rw http.ResponseWriter, r *http.Request) {
+	log.Println("get all request")
 	rw.Header().Set("Content-Type","application/json")
 	var todoItems []TodoItem
 	
 	query, namedArgument := getQueryString(r.URL.Query())
+
 	
 	if result := db.Raw(query,namedArgument).Scan(&todoItems); result.Error != nil{
 		rw.WriteHeader(http.StatusBadRequest)
@@ -74,6 +76,7 @@ func getAllTodoItems (rw http.ResponseWriter, r *http.Request) {
 
 	rw.WriteHeader(http.StatusOK)
 	json.NewEncoder(rw).Encode(map[string]interface{}{"message":"Success","todoItems":todoItems})
+	log.Println("get all request successfully executed")
 }
 
 func getTodoItem (rw http.ResponseWriter, r *http.Request) {
@@ -182,7 +185,7 @@ func getQueryString(q url.Values) (string, NamedArgument) {
 		namedArgument.Name = "%"+q.Get("name")+"%"
 	}
 	if q.Has("description"){
-		query += " AND description LIKE @description"
+		query += " AND description LIKE @Description"
 		namedArgument.Description = "%"+q.Get("description")+"%"
 	}
 
