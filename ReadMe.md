@@ -22,3 +22,6 @@ Made using go, gorm and gorilla-mux. Uses mysql as the database. Mysql version i
 2. Import the collection in postman.
 3. If changes were made in **conf.yaml**, please make sure to take care of steps **5** and **6** in **Steps to Configure**.
 4. Various request and response examples will help you to verify the submission.
+5. There is a request titled `Missing Authorzation`, its examples shows the response if Auth header is not given as well as if wrong token is given. You can change Api url if you want to check other requests too.
+6. Database constraints and api requests structure (along with parameters) are explained in necessary comments.
+7. `POST` and `PUT` requests will be checked to follow constraints specified in the model `TodoItem`. If they follow the constraints request will be successful else an error will be returned.
